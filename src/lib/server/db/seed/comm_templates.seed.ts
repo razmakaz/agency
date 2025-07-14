@@ -15,3 +15,9 @@ export const seed_comm_templates = async () => {
 		}
 	]);
 };
+
+
+
+
+
+
