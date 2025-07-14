@@ -18,7 +18,9 @@
 		"db:start": "docker compose up",
 		"db:push": "drizzle-kit push",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"db:generate": "drizzle-kit generate",
+		"auth:generate": "npx @better-auth/cli generate --config ./src/lib/server/auth.ts --output ./src/lib/server/db/schema/auth.schema.ts"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.5",
@@ -52,8 +54,14 @@
 		"vitest-browser-svelte": "^0.1.0"
 	},
 	"dependencies": {
+		"@faker-js/faker": "^9.9.0",
 		"@inlang/paraglide-js": "^2.0.0",
+		"@sendgrid/mail": "^8.1.5",
+		"better-auth": "^1.2.12",
+		"daisyui": "^5.0.46",
 		"drizzle-orm": "^0.40.0",
-		"postgres": "^3.4.5"
+		"postgres": "^3.4.5",
+		"resend": "^4.6.0",
+		"zod": "^4.0.5"
 	}
 }
