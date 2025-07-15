@@ -13,7 +13,7 @@ export type WithBodyOptions = SharedOptions & {
 
 // Standardized response structure
 export type DataResponse<T> = {
-	data?: T | null;
+	data?: T | T[] | null;
 	success: boolean;
 	errors?: string[];
 	messages?: string[];

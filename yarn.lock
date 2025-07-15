@@ -1761,6 +1761,11 @@ domutils@^3.0.1:
     domelementtype "^2.3.0"
     domhandler "^5.0.3"
 
+dotenv@^17.2.0:
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-17.2.0.tgz#e19678fdabcf86d4bfdb6764a758d7d44efbb6a2"
+  integrity sha512-Q4sgBT60gzd0BB0lSyYD3xM4YxrXA9y4uBDof1JNYGzOXrQdQ6yX+7XIAqoFOGQFOTK1D3Hts5OllpxMDZFONQ==
+
 drizzle-kit@^0.30.2:
   version "0.30.6"
   resolved "https://registry.yarnpkg.com/drizzle-kit/-/drizzle-kit-0.30.6.tgz#e6a1bc57cfbf9f10ed467974a923e236c4f68b31"

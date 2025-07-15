@@ -59,6 +59,7 @@
 		"@sendgrid/mail": "^8.1.5",
 		"better-auth": "^1.2.12",
 		"daisyui": "^5.0.46",
+		"dotenv": "^17.2.0",
 		"drizzle-orm": "^0.40.0",
 		"postgres": "^3.4.5",
 		"resend": "^4.6.0",
