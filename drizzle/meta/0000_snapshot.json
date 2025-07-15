@@ -1,5 +1,5 @@
 {
-  "id": "f4adb84c-5516-4b56-8cde-dad84e00ca14",
+  "id": "bf64fbdd-4b02-40a8-875b-82fbbcdd70a5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -1070,9 +1070,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "default": {
-            "name": "Resend"
-          }
+          "default": "'Resend'"
         },
         "from": {
           "name": "from",

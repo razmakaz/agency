@@ -159,7 +159,7 @@ CREATE TABLE "comm_items" (
 	"is_deleted" boolean DEFAULT false,
 	"comm_template_id" text,
 	"provider_id" text,
-	"provider" text DEFAULT [object Object] NOT NULL,
+	"provider" text DEFAULT 'Resend' NOT NULL,
 	"from" text NOT NULL,
 	"to" text NOT NULL,
 	"cc" text[] DEFAULT '{}',
