@@ -15,7 +15,7 @@ export const CommItemProviderOptions = {
 };
 
 export type CommItemProviderKey =
-	(typeof CommItemProviderOptions)[keyof typeof CommItemProviderOptions];
+	(typeof CommItemProviderOptions)[keyof typeof CommItemProviderOptions]['name'];
 
 export const CommItemModelName = 'comm_items';
 
@@ -25,7 +25,7 @@ export const comm_items = pgTable(CommItemModelName, {
 	provider_id: text('provider_id'),
 	provider: text('provider')
 		.$type<CommItemProviderKey>()
-		.default(CommItemProviderOptions.RESEND)
+		.default(CommItemProviderOptions.RESEND.name)
 		.notNull(),
 	from: text('from').notNull(),
 	to: text('to').notNull(),
