@@ -4,22 +4,11 @@ import { organizations } from './organizations.schema';
 import { contacts } from './contacts.schema';
 import { addresses } from './addresses.schema';
 
-export const AssignmentsOptions = {
-	W2: {
-		name: 'W2',
-		alias: 'W2'
-	},
-	C2C: {
-		name: 'C2C',
-		alias: '1099'
-	},
-	IC: {
-		name: 'IC',
-		alias: '1099'
-	}
-};
-
-export type AssignmentsType = keyof typeof AssignmentsOptions;
+export enum AssignmentType {
+	W2 = 'W2',
+	C2C = 'C2C',
+	IC = 'IC'
+}
 
 export const AssignmentsModelName = 'assignments';
 
@@ -39,7 +28,7 @@ export const assignments = pgTable(AssignmentsModelName, {
 	organization_id: text('organization_id').references(() => organizations.id),
 
 	// Job details
-	assignment_type: text('assignment_type').$type<AssignmentsType>().notNull(),
+	assignment_type: text('assignment_type').$type<AssignmentType>().notNull(),
 	job_title: text('job_title').notNull(),
 	job_description: text('job_description').notNull(),
 	job_start_date: date('job_start_date').notNull(),

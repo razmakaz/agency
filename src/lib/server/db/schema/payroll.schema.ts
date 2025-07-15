@@ -1,8 +1,8 @@
 import { pgTable } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 
-export const PayrollModelName = 'payroll';
+export const PayrollsModelName = 'payrolls';
 
-export const payroll = pgTable(PayrollModelName, {
+export const payrolls = pgTable(PayrollsModelName, {
 	...defaultSchemaFields
 });

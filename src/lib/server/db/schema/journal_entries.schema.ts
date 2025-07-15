@@ -2,18 +2,10 @@ import { integer, pgTable, text, unique } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 import { journals } from './journals.schema';
 
-export const JournalEntryTypeOptions = {
-	DEBIT: {
-		name: 'Debit',
-		icon: 'dollar-sign'
-	},
-	CREDIT: {
-		name: 'Credit',
-		icon: 'dollar-sign'
-	}
-};
-
-export type JournalEntryType = keyof typeof JournalEntryTypeOptions;
+export enum JournalEntryType {
+	DEBIT = 'DEBIT',
+	CREDIT = 'CREDIT'
+}
 
 export const JournalEntriesModelName = 'journal_entries';
 

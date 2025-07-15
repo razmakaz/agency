@@ -1,16 +1,10 @@
 import { pgTable, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 
-export const BankAccountOptions = {
-	CHECKING: {
-		name: 'Checking'
-	},
-	SAVINGS: {
-		name: 'Savings'
-	}
-};
-
-export type BankAccountType = keyof typeof BankAccountOptions;
+export enum BankAccountType {
+	CHECKING = 'CHECKING',
+	SAVINGS = 'SAVINGS'
+}
 
 export const BankAccountsModelName = 'bank_accounts';
 

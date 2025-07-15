@@ -4,38 +4,15 @@ import { sql } from 'drizzle-orm';
 import { phone_numbers } from './phone_numbers.schema';
 import { addresses } from './addresses.schema';
 
-export const ContactTypeOptions = {
-	Staff: {
-		name: 'Staff',
-		icon: 'user'
-	},
-	Partner: {
-		name: 'Partner',
-		icon: 'user'
-	},
-	Client: {
-		name: 'Client',
-		icon: 'user'
-	},
-	Contact: {
-		name: 'Contact',
-		icon: 'user'
-	},
-	Associate: {
-		name: 'Associate',
-		icon: 'user'
-	},
-	Vendor: {
-		name: 'Vendor',
-		icon: 'user'
-	},
-	Other: {
-		name: 'Other',
-		icon: 'user'
-	}
-};
-
-export type ContactType = keyof typeof ContactTypeOptions;
+export enum ContactType {
+	Staff = 'Staff',
+	Partner = 'Partner',
+	Client = 'Client',
+	Contact = 'Contact',
+	Associate = 'Associate',
+	Vendor = 'Vendor',
+	Other = 'Other'
+}
 
 export const ContactsModelName = 'contacts';
 
@@ -70,7 +47,7 @@ export const contacts = pgTable(
 
 		preferred_language: text('preferred_language').notNull().default('en'),
 
-		contact_type: text('contact_type').$type<ContactType>().notNull().default('Other'),
+		contact_type: text('contact_type').$type<ContactType>().notNull().default(ContactType.Other),
 
 		phones: text('phones')
 			.references(() => phone_numbers.id)

@@ -2,10 +2,10 @@ import { sql } from 'drizzle-orm';
 import { defaultSchemaFields } from '../default.schema';
 import { char, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-export const CompCodeModelName = 'comp_code';
+export const CompCodesModelName = 'comp_codes';
 
 export const comp_codes = pgTable(
-	CompCodeModelName,
+	CompCodesModelName,
 	{
 		...defaultSchemaFields,
 		country: char('country', { length: 2 }).notNull().default('US'),

@@ -1,41 +1,14 @@
 import { index, integer, pgTable, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
-import { AssignmentsModelName } from './assignments.schema';
-import { ContactsModelName } from './contacts.schema';
-import { OrganizationsModelName } from './organizations.schema';
-import { ShiftsModelName } from './shifts.schema';
-import { ExpensesModelName } from './expense.schema';
-import { VouchersModelName } from './vouchers.schema';
 
-export const AllowedDocumentEntities = {
-	ASSIGNMENT: {
-		name: 'Assignment',
-		schemaName: AssignmentsModelName
-	},
-	CONTACT: {
-		name: 'Contact',
-		schemaName: ContactsModelName
-	},
-	ORGANIZATION: {
-		name: 'Organization',
-		schemaName: OrganizationsModelName
-	},
-	EXPENSE: {
-		name: 'Expense',
-		schemaName: ExpensesModelName
-	},
-	SHIFT: {
-		name: 'Shift',
-		schemaName: ShiftsModelName
-	},
-	VOUCHER: {
-		name: 'Voucher',
-		schemaName: VouchersModelName
-	}
-};
-
-export type AllowedDocumentEntityType =
-	(typeof AllowedDocumentEntities)[keyof typeof AllowedDocumentEntities]['schemaName'];
+export enum UploadedDocumentEntityType {
+	ASSIGNMENT = 'ASSIGNMENT',
+	CONTACT = 'CONTACT',
+	ORGANIZATION = 'ORGANIZATION',
+	EXPENSE = 'EXPENSE',
+	SHIFT = 'SHIFT',
+	VOUCHER = 'VOUCHER'
+}
 
 export const UploadedDocumentsModelName = 'uploaded_documents';
 
@@ -44,10 +17,7 @@ export const uploaded_documents = pgTable(
 	{
 		...defaultSchemaFields,
 
-		entity_type: text('entity_type')
-			.$type<AllowedDocumentEntityType>()
-			.notNull()
-			.default(AllowedDocumentEntities.ASSIGNMENT.schemaName),
+		entity_type: text('entity_type').$type<UploadedDocumentEntityType>().notNull(),
 		entity_id: text('entity_id').notNull(),
 
 		filename: text('filename').notNull(),

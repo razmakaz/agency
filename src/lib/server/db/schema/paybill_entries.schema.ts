@@ -2,9 +2,9 @@ import { numeric, pgTable, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 import { assignments } from './assignments.schema';
 
-export const PayBillAdjustmentsModelName = 'pay_bill_adjustments';
+export const PayBillEntriesModelName = 'paybill_entries';
 
-export const pay_bill_adjustments = pgTable(PayBillAdjustmentsModelName, {
+export const paybill_entries = pgTable(PayBillEntriesModelName, {
 	...defaultSchemaFields,
 
 	assignment_id: text('assignment_id')
@@ -20,5 +20,5 @@ export const pay_bill_adjustments = pgTable(PayBillAdjustmentsModelName, {
 	bill_amount: numeric('bill_amount').notNull().default('0')
 });
 
-export type PayBillAdjustments = typeof pay_bill_adjustments.$inferSelect;
-export type PayBillAdjustmentsInsert = typeof pay_bill_adjustments.$inferInsert;
+export type PayBillEntries = typeof paybill_entries.$inferSelect;
+export type PayBillEntriesInsert = typeof paybill_entries.$inferInsert;

@@ -1,13 +1,13 @@
 import { pgTable, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 
-export type VoucherType =
-	| 'invoice'
-	| 'statement'
-	| 'debit_memo'
-	| 'credit_memo'
-	// | 'distribution'
-	| 'receipt';
+export enum VoucherType {
+	INVOICE = 'invoice',
+	STATEMENT = 'statement',
+	DEBIT_MEMO = 'debit_memo',
+	Credit_MEMO = 'credit_memo',
+	RECEIPT = 'receipt'
+}
 
 export const VouchersModelName = 'vouchers';
 

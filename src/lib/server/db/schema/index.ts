@@ -1,7 +1,7 @@
 export * from './auth.schema';
 export * from './addresses.schema';
-export * from './approvals.schema';
 export * from './assignments.schema';
+export * from './approvals.schema';
 export * from './bank_accounts.schema';
 export * from './comm_item_statuses.schema';
 export * from './comm_items.schema';
@@ -10,7 +10,7 @@ export * from './comm_templates.schema';
 export * from './comp_codes.schema';
 export * from './contacts.schema';
 export * from './distributions.schema';
-export * from './expense.schema';
+export * from './expenses.schema';
 export * from './external_keys.schema';
 export * from './journal_balances.schema';
 export * from './journal_entries.schema';

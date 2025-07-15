@@ -1,15 +1,12 @@
 import { boolean, integer, pgTable, timestamp, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
-import { organizations } from './organizations.schema';
 import { uploaded_documents } from './uploaded_documents.schema';
 
 export const OrganizationConfigModelName = 'organization_config';
 
 export const organization_configs = pgTable(OrganizationConfigModelName, {
 	...defaultSchemaFields,
-	organization_id: text('organization_id')
-		.references(() => organizations.id)
-		.notNull(),
+
 	effective_date: timestamp('effective_date').notNull(),
 
 	// Operation Settings

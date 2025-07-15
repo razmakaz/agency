@@ -1,34 +1,14 @@
 import { pgTable, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 
-export const JournalTypeOptions = {
-	REVENUE: {
-		name: 'Revenue',
-		icon: 'dollar-sign'
-	},
-	EXPENSE: {
-		name: 'Expense',
-		icon: 'dollar-sign'
-	},
-	TRANSFER: {
-		name: 'Transfer',
-		icon: 'dollar-sign'
-	},
-	ADJUSTMENT: {
-		name: 'Adjustment',
-		icon: 'dollar-sign'
-	},
-	DISTRIBUTION: {
-		name: 'Distribution',
-		icon: 'dollar-sign'
-	},
-	OTHER: {
-		name: 'Other',
-		icon: 'dollar-sign'
-	}
-};
-
-export type JournalType = keyof typeof JournalTypeOptions;
+export enum JournalType {
+	REVENUE = 'REVENUE',
+	EXPENSE = 'EXPENSE',
+	TRANSFER = 'TRANSFER',
+	ADJUSTMENT = 'ADJUSTMENT',
+	DISTRIBUTION = 'DISTRIBUTION',
+	OTHER = 'OTHER'
+}
 
 export const JournalsModelName = 'journals';
 
