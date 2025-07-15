@@ -3,6 +3,8 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { db } from './db/index';
 import { anonymous, apiKey, emailOTP } from 'better-auth/plugins';
 import { PRIVATE_BETTER_AUTH_APP_NAME, PRIVATE_TRUSTED_ORIGINS } from '$env/static/private';
+import { ResendMailer } from './func/mailers/Resend';
+import { createMailer } from './func/mailers/Mailer';
 
 export const auth = betterAuth({
 	database: drizzleAdapter(db, {
@@ -55,6 +57,11 @@ export const auth = betterAuth({
 		emailOTP({
 			async sendVerificationOTP({ email, otp, type }) {
 				console.log(email, otp, type);
+				const mailer = createMailer("resend");
+				mailer.send({
+					to: email,
+					html: `<p>${otp}</p>`
+				})
 			}
 		})
 		// mcp({

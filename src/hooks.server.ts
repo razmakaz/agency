@@ -1,5 +1,8 @@
 import type { Handle } from '@sveltejs/kit';
 import { paraglideMiddleware } from '$lib/paraglide/server';
+import { svelteKitHandler } from 'better-auth/svelte-kit';
+import { sequence } from '@sveltejs/kit/hooks';
+import { auth } from '$lib/server/auth';
 
 const handleParaglide: Handle = ({ event, resolve }) => paraglideMiddleware(event.request, ({ request, locale }) => {
 	event.request = request;
@@ -9,4 +12,8 @@ const handleParaglide: Handle = ({ event, resolve }) => paraglideMiddleware(even
 	});
 });
 
-export const handle: Handle = handleParaglide;
+export const authHook: Handle = async ({ event, resolve }) => {
+	return svelteKitHandler({ event, resolve, auth });
+}
+
+export const handle: Handle = sequence(handleParaglide, authHook);

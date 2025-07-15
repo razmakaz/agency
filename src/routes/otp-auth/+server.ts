@@ -1,27 +1,20 @@
 import type { DataResponse } from '$lib/@types/Fetcher.js';
 import { authClient } from '$lib/client/auth-client.js';
-import Ecco from '$lib/shared/utils/Ecco.js';
 
 export const POST = async ({ request }): Promise<Response> => {
 	try {
 		const body = await request.json();
 
-		const { data, error } = await authClient.emailOtp.sendVerificationOtp({
+		const data = await authClient.signIn.emailOtp({
 			email: body.email,
-			type: 'sign-in'
+			otp: body.otp
 		});
 
-		if (data === null || error) {
-			Ecco.debug('login', { requestBody: body.email, error: error})
-			throw new Error(`${error.message}`)
-		}
-
-		Ecco.debug('login', { requestBody: body.email, otpResponse: data });
-
-		const res: DataResponse<boolean> = {
+		const res: DataResponse<string> = {
 			success: true,
+			data: JSON.stringify(data)
 		};
-		return new Response(JSON.stringify(res), { status: 200 });
+		return new Response(JSON.stringify(res), { status: 500 });
 	} catch (error) {
 		const res: DataResponse<unknown> = {
 			success: false,

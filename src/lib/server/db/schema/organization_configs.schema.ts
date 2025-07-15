@@ -1,6 +1,6 @@
 import { boolean, integer, pgTable, timestamp, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
-import { organizations } from './organization.schema';
+import { organizations } from './organizations.schema';
 import { uploaded_documents } from './uploaded_documents.schema';
 
 export const OrganizationConfigModelName = 'organization_config';
