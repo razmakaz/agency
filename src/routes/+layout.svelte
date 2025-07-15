@@ -27,7 +27,7 @@
 			setTimeout(() => {
 				state.ready = true;
 			}, 10);
-			goto('/login');
+			// goto('/login');
 		}
 	});
 </script>
