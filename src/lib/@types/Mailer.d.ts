@@ -18,10 +18,10 @@ export const SendMailOptions = z4.object({
 	replyTo: Email.optional()
 });
 
-export const MailerFn = z4.object({
-	send: z4.function().args(SendMailOptions).returns(z4.promise(z4.void()))
-});
-
 export type TMailerOptions = z4.infer<typeof MailerOptions>;
 export type TSendMailOptions = z4.infer<typeof SendMailOptions>;
-export type TMailerFn = z4.infer<typeof MailerFn>;
+
+// Explicitly define the TMailerFn type as an object with a required send method
+export type TMailerFn = {
+	send: (mail: TSendMailOptions) => Promise<unknown>;
+};

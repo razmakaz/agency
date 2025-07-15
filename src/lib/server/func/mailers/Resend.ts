@@ -3,33 +3,31 @@ import type { TMailerFn, TSendMailOptions } from '$lib/@types/Mailer';
 import { Resend } from 'resend';
 import { mailerUtils } from './Mailer';
 
-export const ResendMailer = (): TMailerFn => {
-	return {
-		send: async (mail: TSendMailOptions) => {
-			const { to, subject, body, text, cc, bcc, replyTo } = mail;
+export const ResendMailer: TMailerFn = {
+	send: async (mail: TSendMailOptions) => {
+		const { to, subject, body, text, cc, bcc, replyTo } = mail;
 
-			const resend = new Resend(PRIVATE_RESEND_API_KEY);
+		const resend = new Resend(PRIVATE_RESEND_API_KEY);
 
-			const msg = {
-				to,
-				from: 'test@example.com',
-				subject,
-				html: body,
-				text,
-				cc,
-				bcc,
-				replyTo
-			};
+		const msg = {
+			to,
+			from: 'test@example.com',
+			subject,
+			html: body,
+			text,
+			cc,
+			bcc,
+			replyTo
+		};
 
-			const result = await resend.emails.send(msg);
+		const result = await resend.emails.send(msg);
 
-			// mailerUtils.recordEmail(msg);
+		// mailerUtils.recordEmail(msg);
 
-			if (!result) {
-				throw new Error('Failed to send email');
-			}
-
-			return result;
+		if (!result) {
+			throw new Error('Failed to send email');
 		}
-	};
+
+		return result;
+	}
 };
