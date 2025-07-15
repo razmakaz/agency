@@ -1,5 +1,6 @@
 import { PRIVATE_RESEND_API_KEY } from '$env/static/private';
 import type { TMailerFn, TSendMailOptions } from '$lib/@types/Mailer';
+import Ecco from '$lib/shared/utils/Ecco';
 import { Resend } from 'resend';
 
 export const ResendMailer: TMailerFn = {
@@ -7,15 +8,18 @@ export const ResendMailer: TMailerFn = {
 		// Create a new Resend client
 		const resend = new Resend(PRIVATE_RESEND_API_KEY);
 
-		const result = await resend.emails.send({
+		const { data, error } = await resend.emails.send({
 			...mail,
+			html: mail.body,
 			react: undefined
 		});
 
-		if (!result) {
-			throw new Error('Failed to send email');
+		Ecco.info('ResendMailer', data, error);
+
+		if (error) {
+			throw new Error(error.message);
 		}
 
-		return result;
+		return data;
 	}
 };

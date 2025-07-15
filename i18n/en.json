@@ -1,4 +1,12 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+	"hello_world": "Hello, {name} from en!",
+	"auth_login_title": "Login",
+	"auth_login_email": "Email",
+	"auth_login_submit": "Login",
+
+	"auth_logout_working": "Logging out...",
+	"auth_logout_done": "Logged out",
+	"auth_logout_redirecting_in": "You will be redirected to the login page in {timer} seconds",
+	"auth_logout_go_to_login": "Go to Login"
 }

@@ -4,8 +4,7 @@
 	import { DeviceFingerprint } from '$lib/client/utils/DeviceFingerprint';
 	import Ecco from '$lib/shared/utils/Ecco';
 	import { post } from '$lib/shared/utils/Fetcher';
-	import { signOut } from 'better-auth/api';
-	import { onMount } from 'svelte';
+	import { m } from '$lib/paraglide/messages.js';
 
 	const session = authClient.useSession();
 
@@ -45,10 +44,10 @@
 
 <main class="mx-auto flex h-screen max-w-7xl items-center justify-center px-4">
 	<section class="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-md">
-		<h1 class="text-center text-3xl font-bold">Login</h1>
+		<h1 class="text-center text-3xl font-bold">{m.auth_login_title()}</h1>
 
 		<div class="flex flex-col space-y-2">
-			<label for="email" class="text-lg font-medium">Email:</label>
+			<label for="email" class="text-lg font-medium">{m.auth_login_email()}:</label>
 			<input
 				type="email"
 				name="email"
@@ -62,7 +61,7 @@
 			class="w-full rounded-md bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
 			onclick={sendOtp}
 		>
-			Submit
+			{m.auth_login_submit()}
 		</button>
 	</section>
 </main>
