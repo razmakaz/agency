@@ -7,14 +7,11 @@ export const MailerOptions = z4.object({
 
 export const SendMailOptions = z4.object({
 	to: EmailOrEmailArray,
-	cc: EmailOrEmailArray,
-	bcc: EmailOrEmailArray,
+	cc: EmailOrEmailArray.optional(),
+	bcc: EmailOrEmailArray.optional(),
 	subject: z4.string(),
-	// One of but not both, body and text, are required
-	...z4.union([
-		z4.object({ text: z4.string(), body: z4.undefined().optional() }),
-		z4.object({ body: z4.string(), text: z4.undefined().optional() })
-	]),
+	body: z4.string().optional(),
+	text: z4.string().optional(),
 	replyTo: Email.optional()
 });
 

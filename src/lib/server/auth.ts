@@ -57,11 +57,12 @@ export const auth = betterAuth({
 		emailOTP({
 			async sendVerificationOTP({ email, otp, type }) {
 				console.log(email, otp, type);
-				const mailer = createMailer("resend");
-				mailer.send({
+				createMailer('resend').send({
 					to: email,
-					html: `<p>${otp}</p>`
-				})
+					subject: 'OTP Verification',
+					body: 'Your OTP is ' + otp,
+					text: 'Your OTP is ' + otp
+				});
 			}
 		})
 		// mcp({
