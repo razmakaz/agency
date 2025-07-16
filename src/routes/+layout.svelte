@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { authClient } from '$lib/client/auth-client';
-	import { onDestroy, onMount } from 'svelte';
 	import '../app.css';
-	import { goto } from '$app/navigation';
 	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import { page } from '$app/state';
-	import { m } from '$lib/paraglide/messages.js';
+	import ToastContainer from '$lib/client/components/Toaster/ToastContainer.svelte';
+	import Navbar from '$lib/client/components/Nav/Navbar.svelte';
+	import MobileNavbar from '$lib/client/components/Nav/MobileNavbar.svelte';
 
-	// console.log(m);
 	let { children } = $props();
 
 	let state = $state({
@@ -21,13 +20,17 @@
 			return;
 		}
 
+		console.log('session', $session);
+
 		if (!data.data || data.data.user.isAnonymous) {
 			// This is a hack to prevent the root page
 			// from flashing before the session is ready
 			setTimeout(() => {
 				state.ready = true;
 			}, 10);
-			goto('/login');
+			// goto('/login');
+		} else {
+			state.ready = true;
 		}
 	});
 </script>
@@ -38,6 +41,20 @@
 	{/each}
 </div>
 
+<ToastContainer />
+
 {#if state.ready}
-	{@render children()}
+	<div
+		class="grid min-h-screen min-w-screen grid-rows-[1fr_auto] lg:grid-cols-[auto_1fr] lg:grid-rows-[1fr]"
+	>
+		{#if $session.data?.user}
+			<Navbar />
+		{/if}
+		<div class="flex-1">
+			{@render children()}
+		</div>
+		{#if $session.data?.user}
+			<MobileNavbar />
+		{/if}
+	</div>
 {/if}

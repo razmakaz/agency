@@ -55,11 +55,24 @@ export const auth = betterAuth({
 			clientSecret: ''
 		}
 	},
+	advanced: {
+		crossSubDomainCookies: {
+			enabled: true,
+			domain: 'localhost' // TODO: Change to the actual domain and use .env to drive it.
+		},
+		useSecureCookies: process.env.NODE_ENV === 'production'
+	},
 	trustedOrigins: process.env.PRIVATE_TRUSTED_ORIGINS?.split(',') || [],
 	plugins: [
-		anonymous(),
+		anonymous({
+			onLinkAccount: async ({ anonymousUser, newUser }) => {
+				console.log('onLinkAccount', anonymousUser, newUser);
+			}
+		}),
 		apiKey(),
 		emailOTP({
+			allowedAttempts: 7,
+			expiresIn: 60 * 10, // 10 minutes
 			async sendVerificationOTP({ email, otp, type }) {
 				console.log(email, otp, type);
 				await createMailer(CommItemProvider.RESEND)

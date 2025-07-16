@@ -1,4 +1,42 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
-@plugin "daisyui";
+@plugin "daisyui" {
+	themes:
+		light --default,
+		dark --prefersdark;
+}
+
+/* Safelist dynamic classes */
+@source inline("{hover:,active:,focus:,focus-visible:,focus-within:,}{border,text,bg}-{primary,secondary,accent,neutral,info,success,warning,error}-{50,{100..900..100},950}");
+@source inline("{hover:,active:,focus:,focus-visible:,focus-within:,}{border,text,bg}-{slate,gray,zinc,neutral,stone,black,white}-{50,{100..900..100},950}");
+@source inline("{hover:,active:,focus:,focus-visible:,focus-within:,}{border,text,bg}-{red,orange,amber,yellow,lime,green,emerald,teal,cyan,sky,blue,indigo,violet,purple,fuchsia,pink,rose}-{50,{100..900..100},950}");
+@source inline("{hover:,active:,focus:,focus-visible:,focus-within:,}{border,text,bg}-{primary,secondary,accent,neutral,info,success,warning,error}{,-content}");
+
+:root {
+	/* General Overrides */
+
+	/* border radius */
+	--radius-selector: 0.25rem;
+	--radius-field: 0.25rem;
+	--radius-box: 0.25rem;
+
+	/* base sizes */
+	--size-selector: 5.25rem;
+	--size-field: 0.25rem;
+
+	/* border size */
+	--border: 1px;
+
+	/* effects */
+	--depth: 1;
+	--noise: 1;
+}
+
+/* Fixing Dark Theme Colors */
+:root:has(input.theme-controller[value='dark']:checked),
+[data-theme='dark'] {
+	--color-base-100: oklch(21.15% 0.012 254.09);
+	--color-base-200: oklch(23.26% 0.014 253.1);
+	--color-base-300: oklch(25.33% 0.016 252.42);
+}

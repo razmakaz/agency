@@ -5,13 +5,16 @@
 	import Ecco from '$lib/shared/utils/Ecco';
 	import { post } from '$lib/shared/utils/Fetcher';
 	import { m } from '$lib/paraglide/messages.js';
+	import { page } from '$app/state';
 
 	const session = authClient.useSession();
 
-	let email: string = $state('');
+	let email: string = $state(page.url.searchParams.get('email') || '');
 
 	// TODO: Add a toast for failed email input
-	const sendOtp = async () => {
+	const sendOtp = async (event: Event) => {
+		event.preventDefault();
+
 		if (!email) return;
 
 		// Generate the device fingerprint
@@ -21,7 +24,10 @@
 
 		await post('/login', { body: JSON.stringify({ email, fingerprint, confidence }) })
 			.then((response) => {
-				goto('/otp-auth');
+				const url = new URL(window.location.href);
+				url.pathname = '/otp-auth';
+				url.searchParams.set('email', email);
+				goto(url.toString());
 				Ecco.info('login', response);
 			})
 			.catch((error) => Ecco.error('login', error));
@@ -36,32 +42,25 @@
 		// Each time the user arrives on the page, it's creating
 		// a new session, misrepresenting the amount of users
 		// visiting the page.
-		authClient.signIn.anonymous();
+		// authClient.signIn.anonymous();
 	};
 </script>
 
 <svelte:window on:click={onInteract} />
 
 <main class="mx-auto flex h-screen max-w-7xl items-center justify-center px-4">
-	<section class="w-full max-w-md space-y-6 rounded-lg border p-8 shadow-md">
+	<section class="card bg-base-200 flex w-full max-w-md justify-center space-y-6 rounded-lg p-8">
 		<h1 class="text-center text-3xl font-bold">{m.auth_login_title()}</h1>
 
-		<div class="flex flex-col space-y-2">
-			<label for="email" class="text-lg font-medium">{m.auth_login_email()}:</label>
-			<input
-				type="email"
-				name="email"
-				bind:value={email}
-				class="rounded-md border border-gray-300 p-3 text-black focus:border-blue-500 focus:ring-blue-500"
-			/>
-		</div>
-
-		<button
-			type="button"
-			class="w-full rounded-md bg-blue-600 py-3 font-semibold text-white hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:outline-none"
-			onclick={sendOtp}
-		>
-			{m.auth_login_submit()}
-		</button>
+		<form onsubmit={sendOtp} class="flex flex-col gap-2">
+			<label for="email" class="col-span-2 font-medium">{m.auth_login_email()}</label>
+			<div class="flex w-full items-center gap-2">
+				<input type="email" name="email" bind:value={email} class="input w-full" />
+				<button type="submit" class="btn btn-primary" disabled={!email}>
+					{m.auth_login_submit()}
+				</button>
+			</div>
+			<p class="col-span-2 text-center text-sm text-gray-500">{m.auth_login_notice()}</p>
+		</form>
 	</section>
 </main>

@@ -15,10 +15,19 @@
 			return;
 		}
 
-		if (data.data) {
+		if (data.data || !state.timerId) {
 			authClient.signOut();
 			state.timerId = setInterval(() => {
-				state.timer--;
+				console.log('timer', state.timer);
+				if (state.timer === 1) {
+					goto('/login');
+					if (state.timerId) {
+						clearInterval(state.timerId);
+						state.timerId = null;
+					}
+				} else {
+					state.timer--;
+				}
 			}, 1000);
 		}
 	});
@@ -36,10 +45,10 @@
 			<h1 class="text-2xl font-bold">{m.auth_logout_working()}</h1>
 		</div>
 	{:else}
-		<div class="flex flex-col items-center justify-center">
-			<h1 class="text-2xl font-bold">{m.auth_logout_working()}</h1>
+		<div class="flex flex-col items-center justify-center gap-4">
+			<h1 class="text-2xl font-bold">{m.auth_logout_done()}</h1>
 			<p>{m.auth_logout_redirecting_in({ timer: state.timer })}</p>
-			<a href="/login" class="text-blue-500">{m.auth_logout_go_to_login()}</a>
+			<a href="/login" class="btn btn-primary">{m.auth_logout_go_to_login()}</a>
 		</div>
 	{/if}
 </div>

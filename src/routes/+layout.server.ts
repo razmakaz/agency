@@ -1,5 +1,3 @@
-import { auth } from '$lib/server/auth';
-
 export const load = async ({ cookies, url }) => {
 	if (url.pathname === '/login' && url.searchParams.get('delete_cookies')) {
 		// delete all cookies

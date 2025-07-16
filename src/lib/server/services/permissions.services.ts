@@ -48,5 +48,62 @@ export const PermissionsServices = {
 			)
 			.then((res) => res[0]);
 		return user !== undefined;
+	},
+	/**
+	 * Get all unique roles
+	 * @returns array of unique roles
+	 */
+	getPermissionKeys: async () => {
+		// Return an object containing roles, resources, and contexts, each with the unique values among all permissions
+		const keys = await db
+			.select({
+				role: permissions.role,
+				resource: permissions.resource,
+				context: permissions.context
+			})
+			.from(permissions)
+			.groupBy(permissions.role, permissions.resource, permissions.context);
+		const roles = keys.map((key) => key.role);
+		const resources = keys.map((key) => key.resource);
+		const contexts = keys.map((key) => key.context);
+		return {
+			roles,
+			resources,
+			contexts
+		};
+	},
+	/**
+	 * Create a permission object
+	 * @param userId
+	 * @param organizationId
+	 * @param permission - format: role:resource:context
+	 * @returns permission object or null if the permission is invalid
+	 */
+	permissionFactory: ({
+		userId,
+		organizationId,
+		permission
+	}: {
+		userId: string;
+		organizationId: string;
+		permission: string;
+	}) => {
+		// Make sure the permission is a string
+		if (!permission) return null;
+		// Make sure the permission has 2 ":"s
+		if (permission.split(':').length !== 2) return null;
+
+		// Make sure the permission has 2 ":"s
+		const [role, resource, context] = permission.split(':');
+		if (!role || !resource || !context) return null;
+
+		// Make sure the role, resource, and context are strings
+		return {
+			userId,
+			organizationId,
+			role,
+			resource,
+			context
+		};
 	}
 };

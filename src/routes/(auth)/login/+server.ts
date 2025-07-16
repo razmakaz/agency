@@ -1,6 +1,7 @@
 import type { DataResponse } from '$lib/@types/Fetcher.js';
 import { authClient, signIn } from '$lib/client/auth-client';
 import Ecco from '$lib/shared/utils/Ecco.js';
+// import Gradient from '@bedard/gradient';
 
 export const POST = async ({ request }): Promise<Response> => {
 	try {
