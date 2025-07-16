@@ -1,14 +1,15 @@
 import { boolean, integer, pgTable, timestamp, text } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 import { uploaded_documents } from './uploaded_documents.schema';
+import { organizations } from './organizations.schema';
 
-export const OrganizationConfigModelName = 'organization_config';
+export const OrganizationConfigsModelName = 'organization_configs';
 
-export const organization_configs = pgTable(OrganizationConfigModelName, {
+export const organization_configs = pgTable(OrganizationConfigsModelName, {
 	...defaultSchemaFields,
 
 	effective_date: timestamp('effective_date').notNull(),
-
+	organization_id: text("organization_id").references(() => organizations.id).notNull(),
 	// Operation Settings
 	distribution_hold: boolean('distribution_hold').default(false),
 	chargeback_enabled: boolean('chargeback_enabled').default(true),
