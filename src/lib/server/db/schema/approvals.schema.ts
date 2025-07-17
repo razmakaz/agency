@@ -26,7 +26,7 @@ export const approvals = pgTable(ApprovalsModelName, {
 		.default(ApprovalsOptions.SHIFT.name as ApprovalsEntityType),
 	entity_id: text('entity_id'),
 	approved_by: text('approved_by').references(() => contacts.id),
-	approved_at: timestamp('approved_at')
+	approved_at: timestamp('approved_at', { mode: 'string' })
 });
 
 export type Approvals = typeof approvals.$inferSelect;

@@ -18,7 +18,7 @@ export const onboarding_steps = pgTable(
 		description: text('description'),
 		skippable: boolean('skippable').default(false),
 		target_type: text('target_type').$type<OnboardingStepTargetType>().notNull(),
-		effective_date: timestamp('effective_date').notNull()
+		effective_date: timestamp('effective_date', { mode: 'string' }).notNull()
 	},
 	(table) => [
 		unique('idx_onboardings_organizations_step_name').on(table.step_name, table.target_type)

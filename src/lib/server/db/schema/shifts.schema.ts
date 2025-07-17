@@ -7,10 +7,10 @@ export const ShiftsModelName = 'shifts';
 export const shifts = pgTable(ShiftsModelName, {
 	...defaultSchemaFields,
 	assignment_id: text('assignment_id').references(() => assignments.id),
-	start_time: timestamp('start_time'),
-	break_start: timestamp('break_start'),
-	break_end: timestamp('break_end'),
-	end_time: timestamp('end_time'),
+	start_time: timestamp('start_time', { mode: 'string' }),
+	break_start: timestamp('break_start', { mode: 'string' }),
+	break_end: timestamp('break_end', { mode: 'string' }),
+	end_time: timestamp('end_time', { mode: 'string' }),
 	revised_from: text('revised_from').references(() => shifts.id),
 	revised_to: text('revised_to').references(() => shifts.id)
 });

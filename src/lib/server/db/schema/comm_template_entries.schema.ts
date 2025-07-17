@@ -10,7 +10,7 @@ export const comm_template_entries = pgTable(CommTemplateEntriesModelName, {
 		.references(() => comm_templates.id)
 		.notNull(),
 	language: text('language').notNull(),
-	effective_from: timestamp('effective_from').notNull(),
+	effective_from: timestamp('effective_from', { mode: 'string' }).notNull(),
 	subject: text('subject').notNull(),
 	body: text('body').notNull()
 });

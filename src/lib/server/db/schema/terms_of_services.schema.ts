@@ -7,7 +7,7 @@ export const terms_of_services = pgTable(TermsOfServicesModelName, {
 	...defaultSchemaFields,
 	content: text('content').notNull(),
 	version: text('version').notNull(),
-	effective_date: timestamp('effective_date').notNull()
+	effective_date: timestamp('effective_date', { mode: 'string' }).notNull()
 });
 
 export type TermsOfServices = typeof terms_of_services.$inferSelect;

@@ -8,7 +8,7 @@ export const expenses = pgTable(ExpensesModelName, {
 	...defaultSchemaFields,
 	assignment_id: text('assignment_id').references(() => assignments.id),
 	amount: numeric('amount'),
-	date: timestamp('date'),
+	date: timestamp('date', { mode: 'string' }),
 	notes: text('notes').array()
 });
 

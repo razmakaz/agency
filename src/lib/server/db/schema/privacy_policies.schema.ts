@@ -7,7 +7,7 @@ export const privacy_policies = pgTable(PrivacyPoliciesModelName, {
 	...defaultSchemaFields,
 	content: text('content').notNull(),
 	version: text('version').notNull(),
-	effective_date: timestamp('effective_date').notNull()
+	effective_date: timestamp('effective_date', { mode: 'string' }).notNull()
 });
 
 export type PrivacyPolicies = typeof privacy_policies.$inferSelect;

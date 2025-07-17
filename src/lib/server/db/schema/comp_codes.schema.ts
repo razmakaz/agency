@@ -12,7 +12,7 @@ export const comp_codes = pgTable(
 		region: char('region', { length: 3 }).notNull(),
 		code: text('code').notNull(),
 		description: text('description'),
-		effective_from: timestamp('effective_from')
+		effective_from: timestamp('effective_from', { mode: 'string' })
 			.notNull()
 			.default(sql`now()`)
 	},

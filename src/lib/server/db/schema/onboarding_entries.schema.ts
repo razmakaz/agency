@@ -12,7 +12,7 @@ export const onboarding_entries = pgTable(
 		step_id: text('step_id')
 			.references(() => onboarding_steps.id)
 			.notNull(),
-		completed_at: timestamp('completed_at')
+		completed_at: timestamp('completed_at', { mode: 'string' })
 	},
 	(table) => [
 		unique('idx_onboardings_entries_step_id_target_id').on(table.step_id, table.target_id)
