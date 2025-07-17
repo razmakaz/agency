@@ -1,16 +1,23 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import UserWelcome from './UserWelcome.svelte';
 	import Icon from '@iconify/svelte';
 	import { m } from '$lib/paraglide/messages';
 	import { scale } from 'svelte/transition';
+	import { authClient } from '$lib/client/auth-client';
+	import UserProfile from './UserProfile.svelte';
+	import UserPreferences from './UserPreferences.svelte';
+	import UserType from './UserType.svelte';
 
 	const { entries } = $props();
 
 	const animationDuration = 444;
 
+	const session = authClient.useSession();
+
 	let state = $state({
 		activeEntryIndex: 0,
+		user_id: '',
 		showControls: true,
 		showProgress: false,
 		canSkip: false,
@@ -31,8 +38,17 @@
 		state.canBack = state.activeEntryIndex > 0;
 	});
 
+	let unsub: () => void;
+
 	onMount(() => {
 		console.log(entries);
+		unsub = session.subscribe((session) => {
+			state.user_id = session?.data?.user?.id ?? '';
+		});
+	});
+
+	onDestroy(() => {
+		unsub?.();
 	});
 </script>
 
@@ -40,6 +56,15 @@
 	{#if activeItem.target_type === 'user'}
 		{#if activeItem.name === 'welcome'}
 			<UserWelcome entry={activeItem} {state} />
+		{/if}
+		{#if activeItem.name === 'type'}
+			<UserType entry={activeItem} {state} />
+		{/if}
+		{#if activeItem.name === 'profile'}
+			<UserProfile entry={activeItem} {state} />
+		{/if}
+		{#if activeItem.name === 'preferences'}
+			<UserPreferences entry={activeItem} {state} />
 		{/if}
 	{/if}
 	{#if state.showControls}

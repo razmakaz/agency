@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { Fetcher } from '$lib/shared/utils/Fetcher';
 	import { page } from '$app/state';
-	import GradientUnderlineHeader from '../Stylish/GradientUnderlineHeader.svelte';
 
 	const { entry, state: wrapperState } = $props();
 
@@ -74,36 +73,4 @@
 	});
 </script>
 
-<div class="flex flex-col items-center justify-center gap-4 p-4">
-	<GradientUnderlineHeader ready={componentState.ready}>
-		{m.onboarding_welcome_title()}
-	</GradientUnderlineHeader>
-
-	<div class="text-center">
-		<p class="text-lg">
-			{@html m.onboarding_welcome_description()}
-		</p>
-	</div>
-	<div class="flex flex-col items-start gap-2">
-		<div class="flex items-center gap-2 text-center">
-			<input
-				type="checkbox"
-				class="checkbox bg-base-300 h-6 w-6"
-				bind:checked={componentState.optIn}
-			/>
-			<div class="text-base-content/50 text-sm">
-				{@html m.onboarding_welcome_opt_in()}
-			</div>
-		</div>
-		<div class="flex items-center gap-2 text-center">
-			<input
-				type="checkbox"
-				class="checkbox bg-base-300 h-6 w-6"
-				bind:checked={componentState.acceptTerms}
-			/>
-			<div class="text-base-content/50 text-sm">
-				{@html m.onboarding_welcome_accept_description()}
-			</div>
-		</div>
-	</div>
-</div>
+<div class="flex flex-col items-center justify-center gap-4 p-4">asdf</div>

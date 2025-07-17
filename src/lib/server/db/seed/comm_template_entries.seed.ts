@@ -10,7 +10,7 @@ export const seed_comm_template_entries = async () => {
 			id: 'fe8430bf-239f-499f-897f-2868a7efa7b5',
 			comm_template_id: 'c1c7f8c0-ba8a-40e7-a03c-ebcfb045fbd7',
 			language: 'en',
-			effective_from: new Date(),
+			effective_from: new Date().toISOString(),
 			subject: 'Your One-Time Password (OTP)',
 			body: 'Your OTP is {{otp}}'
 		},
@@ -18,7 +18,7 @@ export const seed_comm_template_entries = async () => {
 			id: '38b291c5-7e5c-45d8-8bb6-5744bb9947c7',
 			comm_template_id: 'c1c7f8c0-ba8a-40e7-a03c-ebcfb045fbd7',
 			language: 'es',
-			effective_from: new Date(),
+			effective_from: new Date().toISOString(),
 			subject: 'Su contraseña de un solo uso (OTP)',
 			body: 'Su OTP es {{otp}}'
 		}

@@ -7,10 +7,9 @@
 	import Navbar from '$lib/client/components/Nav/Navbar.svelte';
 	import MobileNavbar from '$lib/client/components/Nav/MobileNavbar.svelte';
 	import { onMount } from 'svelte';
+	import { AppState } from '$lib/client/stores/AppState';
 
 	let { children, data } = $props();
-
-	console.log('Theme CSS', data);
 
 	let state = $state({
 		ready: false
@@ -23,7 +22,10 @@
 			return;
 		}
 
-		console.log('session', $session);
+		AppState.update((state) => ({
+			...state,
+			session: data.data
+		}));
 
 		if (!data.data || data.data.user.isAnonymous) {
 			// This is a hack to prevent the root page
@@ -54,7 +56,9 @@
 
 {#if state.ready}
 	<div
-		class="grid min-h-screen min-w-screen grid-rows-[1fr_auto] lg:grid-cols-[auto_1fr] lg:grid-rows-[1fr]"
+		class="grid min-h-screen min-w-screen {$AppState.navEnabled
+			? 'grid-rows-[1fr_auto] lg:grid-cols-[auto_1fr] lg:grid-rows-[1fr]'
+			: 'grid-cols-1 grid-rows-1'}"
 	>
 		{#if $session.data?.user}
 			<Navbar />

@@ -14,7 +14,7 @@ export const seed_onboarding_steps = async () => {
 			step_order: 100,
 			description: 'welcome to your account',
 			target_type: OnboardingStepTargetType.USER,
-			effective_date: new Date()
+			effective_date: new Date().toISOString()
 		},
 		{
 			id: '775ab30f-789c-4401-b687-ca9f43ee613a',
@@ -22,7 +22,7 @@ export const seed_onboarding_steps = async () => {
 			step_order: 200,
 			description: 'select the type of account',
 			target_type: OnboardingStepTargetType.USER,
-			effective_date: new Date()
+			effective_date: new Date().toISOString()
 		},
 		{
 			id: '7da58a61-0671-48dc-be43-375776b5df67',
@@ -30,7 +30,7 @@ export const seed_onboarding_steps = async () => {
 			step_order: 300,
 			description: 'setup the profile',
 			target_type: OnboardingStepTargetType.USER,
-			effective_date: new Date()
+			effective_date: new Date().toISOString()
 		},
 		{
 			id: '847f51d7-fbd7-41aa-9e27-7cec4a70673e',
@@ -38,7 +38,50 @@ export const seed_onboarding_steps = async () => {
 			step_order: 400,
 			description: 'setup the preferences',
 			target_type: OnboardingStepTargetType.USER,
-			effective_date: new Date()
+			effective_date: new Date().toISOString()
+		},
+		// Partner onboarding steps
+		{
+			id: '623a9042-a816-4b40-94d5-09bd87c0bd3e',
+			step_name: 'company_info',
+			step_order: 1000,
+			description: 'setup the company info',
+			target_type: OnboardingStepTargetType.PARTNER,
+			effective_date: new Date().toISOString()
+		},
+		{
+			id: '623a9042-a816-4b40-94d5-09bd87c0bd3e',
+			step_name: 'psa',
+			step_order: 2000,
+			description: 'select the psa',
+			target_type: OnboardingStepTargetType.PARTNER,
+			effective_date: new Date().toISOString()
+		},
+		{
+			id: 'e4c1fb59-e663-4c57-bdc7-ef6b089ec978',
+			step_name: 'w9',
+			step_order: 3000,
+			description: 'sign the w9',
+			target_type: OnboardingStepTargetType.PARTNER,
+			effective_date: new Date().toISOString()
+		},
+		// Client onboarding steps
+		{
+			id: 'e4c1fb59-e663-4c57-bdc7-ef6b089ec978',
+			step_name: 'company_access_request',
+			step_order: 1000,
+			description: 'request company access',
+			target_type: OnboardingStepTargetType.CLIENT,
+			effective_date: new Date().toISOString()
+		},
+		// Client onboarding steps
+		{
+			id: 'e4c1fb59-e663-4c57-bdc7-ef6b089ec978',
+			step_name: 'associate_access_request',
+			step_order: 1000,
+			description: 'request associate access',
+			target_type: OnboardingStepTargetType.ASSOCIATE,
+			effective_date: new Date().toISOString()
 		}
 	];
 
@@ -50,7 +93,7 @@ export const seed_onboarding_steps = async () => {
 			step_order: 1,
 			description: 'setup the preferences',
 			target_type: OnboardingStepTargetType.ORGANIZATION,
-			effective_date: new Date()
+			effective_date: new Date().toISOString()
 		}
 	];
 

@@ -10,7 +10,7 @@ export const organization_configs = pgTable(OrganizationConfigsModelName, {
 
 	effective_date: timestamp('effective_date', { mode: 'string' }).notNull(),
 	organization_id: text('organization_id')
-		.references(() => organizations.id)
+		.references(() => organizations.id, { onDelete: 'cascade' })
 		.notNull(),
 	// Operation Settings
 	distribution_hold: boolean('distribution_hold').default(false),

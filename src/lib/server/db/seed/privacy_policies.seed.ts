@@ -6,7 +6,7 @@ export const seed_privacy_policies = async () => {
 		{
 			id: '9a7b146b-ce6d-4bdf-a712-8074fff1b6cf',
 			content: 'Privacy Policy',
-			effective_date: new Date(),
+			effective_date: new Date().toISOString(),
 			version: '0.0.1'
 		}
 	];

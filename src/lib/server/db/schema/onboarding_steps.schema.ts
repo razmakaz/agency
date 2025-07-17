@@ -2,9 +2,11 @@ import { boolean, integer, pgTable, text, timestamp, unique } from 'drizzle-orm/
 import { defaultSchemaFields } from '../default.schema';
 
 export enum OnboardingStepTargetType {
-	ORGANIZATION = 'organization',
-	USER = 'user',
-	ASSOCIATE = 'associate'
+	PARTNER = 'partner',
+	ASSOCIATE = 'associate',
+	CLIENT = 'client',
+	STAFF = 'staff',
+	USER = 'user'
 }
 
 export const OnboardingStepsModelName = 'onboarding_steps';

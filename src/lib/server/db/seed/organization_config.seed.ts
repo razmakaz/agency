@@ -5,7 +5,7 @@ export const seed_organization_config = async () => {
 	const payload = [
 		{
 			id: '7df7aa81-e2e1-4a3a-be6f-c24e07a2d873',
-			effective_date: new Date(),
+			effective_date: new Date().toISOString(),
 			organization_id: '64d242b9-a8e5-49b4-8534-a9269a6edd3c'
 		}
 	];

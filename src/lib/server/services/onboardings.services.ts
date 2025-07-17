@@ -5,7 +5,12 @@ import {
 	type OnboardingStepsInsert
 } from '$lib/server/db/schema/onboarding_steps.schema';
 import { and, asc, eq, isNull } from 'drizzle-orm';
-import { onboarding_entries, type OnboardingEntriesInsert } from '../db/schema/';
+import {
+	contacts,
+	onboarding_entries,
+	type Contacts,
+	type OnboardingEntriesInsert
+} from '../db/schema/';
 
 export const OnboardingServices = {
 	/**
@@ -22,6 +27,7 @@ export const OnboardingServices = {
 		target_id: string;
 	}) => {
 		// Get the steps for the target type
+
 		const steps = await db
 			.select()
 			.from(onboarding_steps)
@@ -30,14 +36,11 @@ export const OnboardingServices = {
 		// Generate the entries for the target
 		const entries = OnboardingServices.onboardingEntryFactory({ target_id, steps });
 
-		// If there are no steps, return an empty array
-		if (entries.length === 0) {
-			return [];
-		}
-
 		// Insert the entries into the database
 		// If the entry already exists, do nothing
-		await db.insert(onboarding_entries).values(entries).onConflictDoNothing();
+		if (entries.length > 0) {
+			await db.insert(onboarding_entries).values(entries).onConflictDoNothing();
+		}
 		return entries;
 	},
 
@@ -114,5 +117,93 @@ export const OnboardingServices = {
 				completed_at: null
 			} as OnboardingEntriesInsert;
 		});
+	},
+	/**
+	 * Complete and update an onboarding entry.
+	 * @param target_id - The id of the target (user or other entity)
+	 * @param step_name - The name of the onboarding step
+	 * @param payload - The data to update (if any)
+	 * @returns The updated onboarding entry, or an object with contact and onboarding_entry if contact is updated, or null if not complete
+	 */
+	completeOnboardingEntry: async (
+		target_id: string,
+		step_name: string,
+		payload: Partial<Contacts>
+	) => {
+		// Wrap the contact and onboarding entry updates in a transaction
+		const result = await db.transaction(async (tx) => {
+			// Get the related onboarding entry and step
+			const entryQuery = await tx
+				.select()
+				.from(onboarding_entries)
+				.innerJoin(onboarding_steps, eq(onboarding_entries.step_id, onboarding_steps.id))
+				.where(
+					and(
+						eq(onboarding_entries.target_id, target_id),
+						eq(onboarding_steps.step_name, step_name)
+					)
+				);
+
+			const entry = entryQuery?.[0] || null;
+			if (!entry) return null;
+
+			let is_complete = false;
+			let updated_contact = null;
+
+			const [contact] = await tx
+				.update(contacts)
+				.set({
+					...payload
+				})
+				.where(eq(contacts.user_id, target_id))
+				.returning();
+
+			updated_contact = contact;
+
+			switch (entry.onboarding_steps.step_name) {
+				case 'welcome': {
+					is_complete = !!(contact && contact.accepted_terms_at);
+					break;
+				}
+				case 'type': {
+					is_complete = !!(contact && contact.contact_type);
+					await OnboardingServices.createOnboardingEntries({
+						target_type: contact.contact_type as unknown as OnboardingStepTargetType,
+						target_id: target_id
+					});
+					break;
+				}
+				case 'profile': {
+					break;
+				}
+				case 'preferences': {
+					break;
+				}
+				case 'company_info': {
+					break;
+				}
+				default:
+					// For other steps, just mark as incomplete (could be extended)
+					is_complete = false;
+					break;
+			}
+
+			if (!is_complete) return null;
+
+			// Set the onboarding entry to completed
+			const [updated_entry] = await tx
+				.update(onboarding_entries)
+				.set({ completed_at: new Date().toISOString() })
+				.where(eq(onboarding_entries.id, entry.onboarding_entries.id))
+				.returning();
+
+			// If we updated a contact, return both; otherwise just the entry
+			return {
+				contact: updated_contact,
+				onboarding_entry: updated_entry
+			};
+		});
+
+		return result;
 	}
 };

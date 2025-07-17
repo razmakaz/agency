@@ -1,6 +1,6 @@
 import { auth } from '$lib/server/auth';
 import { ContactType, type ContactsInsert } from '$lib/server/db/schema/contacts.schema.js';
-import { Servicer } from '$lib/server/services/Servicer.js';
+import { Services } from '$lib/server/services/Servicer.js';
 
 export const GET = async ({ request }) => {
 	// Get the user's session, get the contact by user_id.
@@ -8,7 +8,7 @@ export const GET = async ({ request }) => {
 		headers: request.headers
 	});
 
-	let contact = await Servicer.contacts.getContactByUserId(session?.user?.id ?? '');
+	let contact = await Services.contacts.getContactByUserId(session?.user?.id ?? '');
 
 	if (!contact) {
 		// Create a new contact
@@ -16,7 +16,7 @@ export const GET = async ({ request }) => {
 			user_id: session?.user?.id ?? '',
 			contact_type: ContactType.Partner
 		} as ContactsInsert;
-		contact = await Servicer.contacts.createContact(session?.user?.id ?? '', payload);
+		contact = await Services.contacts.createContact(session?.user?.id ?? '', payload);
 	}
 
 	return new Response(JSON.stringify(contact), { status: 200 });
@@ -34,14 +34,14 @@ export const PATCH = async ({ request }) => {
 
 	const body = await request.json();
 
-	const contact = await Servicer.contacts.getContactByUserId(session?.user?.id ?? '');
+	const contact = await Services.contacts.getContactByUserId(session?.user?.id ?? '');
 	if (!contact) {
 		return new Response('Contact not found', { status: 404 });
 	}
 
 	console.log('body', body);
 
-	const updatedContact = await Servicer.contacts.updateContact(contact.id, body);
+	const updatedContact = await Services.contacts.updateContact(contact.id, body);
 
 	return new Response(JSON.stringify(updatedContact), { status: 200 });
 };

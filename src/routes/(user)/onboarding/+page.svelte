@@ -4,8 +4,6 @@
 
 	const { data } = $props();
 
-	console.log(data);
-
 	AppState.update((state) => ({
 		...state,
 		navEnabled: false

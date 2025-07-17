@@ -7,7 +7,7 @@ export const seed_terms_of_services = async () => {
 		{
 			id: 'c11bc305-8ec5-44b0-bf6a-62a83cd1b403',
 			content: 'Terms of Service',
-			effective_date: new Date(),
+			effective_date: new Date().toISOString(),
 			version: '0.0.1'
 		}
 	];
