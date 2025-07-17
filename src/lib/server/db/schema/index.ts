@@ -16,6 +16,8 @@ export * from './journal_balances.schema';
 export * from './journal_entries.schema';
 export * from './journals.schema';
 export * from './notebook_entries.schema';
+export * from './onboarding_entries.schema';
+export * from './onboarding_steps.schema';
 export * from './organization_configs.schema';
 export * from './organizations.schema';
 export * from './paybill_components.schema';

@@ -13,10 +13,22 @@ export const seed_organizations = async () => {
 	const orgs: Organizations[] = [];
 	for await (const org of payload) {
 		try {
-			const inserted = await db.insert(organizations).values(org).returning();
+			const inserted = await db
+				.insert(organizations)
+				.values(org)
+				.onConflictDoUpdate({
+					target: organizations.id,
+					set: {
+						...org
+					}
+				})
+				.returning();
 			orgs.push(...inserted);
-		} catch (err) {
-			console.error('Error seeding organizations:', err);
+		} catch (error: unknown) {
+			console.error(
+				`Error seeding organization ${org.display_name} (${org.id}):`,
+				error instanceof Error ? error.message : String(error)
+			);
 		}
 	}
 

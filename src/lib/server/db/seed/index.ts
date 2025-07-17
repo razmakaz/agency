@@ -5,13 +5,13 @@ import { seed_organizations } from './organizations.seed';
 import { seed_privacy_policies } from './privacy_policies.seed';
 import { seed_terms_of_services } from './terms_of_services.seed';
 import { seed_white_label_configs } from './white_label_configs.seed';
+import { seed_onboarding_steps } from './onboarding_steps.seed';
 
+export const seed = async (showErrors = false) => {
+	// Temporarily disable console.error to eliminate the noise.
+	const originalConsoleError = console.error;
+	console.error = showErrors ? originalConsoleError : () => {};
 
-// IMPORTANT: Don't use Ecco in the seed files.
-// The script will fail if Ecco is used because
-// vite can't resolve the Ecco module with the alias.
-
-export const seed = async () => {
 	console.log('Seeding database...');
 
 	// Create the default privacy policies and terms of services
@@ -28,6 +28,12 @@ export const seed = async () => {
 
 	// Create the default white labels
 	await seed_white_label_configs();
-	
+
+	// Create the default onboarding steps
+	await seed_onboarding_steps();
+
 	console.log('Database seeded successfully!');
+
+	// Restore console.error
+	console.error = originalConsoleError;
 };

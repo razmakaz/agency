@@ -1,8 +1,9 @@
-import { check, index, pgTable, text } from 'drizzle-orm/pg-core';
+import { check, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 import { sql } from 'drizzle-orm';
 import { phone_numbers } from './phone_numbers.schema';
 import { addresses } from './addresses.schema';
+import { users } from './auth.schema';
 
 export enum ContactType {
 	Staff = 'Staff',
@@ -32,9 +33,8 @@ export const contacts = pgTable(
 
 		// This is the name that will be displayed to the user
 		// It is the preferred name if it is not empty, otherwise it is the first name
-		display_name: text('display_name')
-			.generatedAlwaysAs(
-				sql`
+		display_name: text('display_name').generatedAlwaysAs(
+			sql`
                 CASE 
                     WHEN contact_type IN ('Partner', 'Vendor', 'Client') THEN 
                     COALESCE(NULLIF(trim(preferred_name), ''), trim(legal_name))
@@ -42,12 +42,17 @@ export const contacts = pgTable(
                     COALESCE(NULLIF(trim(preferred_name), ''), trim(first_name))
                 END
                 `
-			)
-			.notNull(),
+		),
 
 		preferred_language: text('preferred_language').notNull().default('en'),
 
 		contact_type: text('contact_type').$type<ContactType>().notNull().default(ContactType.Other),
+
+		accepted_terms_at: timestamp('accepted_terms_on', { mode: 'string' }),
+		opt_in_at: timestamp('opt_in_on', { mode: 'string' }),
+		last_login_at: timestamp('last_login_at', { mode: 'string' }),
+
+		user_id: text('user_id').references(() => users.id),
 
 		phones: text('phones')
 			.references(() => phone_numbers.id)
@@ -62,20 +67,7 @@ export const contacts = pgTable(
 		index('idx_name').on(t.display_name),
 		index('idx_type').on(t.contact_type),
 		index('idx_emails').on(t.emails),
-		index('idx_phones').on(t.phones),
-		check(
-			'contact_type_check',
-			sql`
-                (
-                    contact_type IN ('Staff', 'Associate', 'Contact', 'Other') 
-                AND first_name IS NOT NULL AND last_name IS NOT NULL AND legal_name IS NULL
-                )
-                OR (
-                    contact_type IN ('Partner', 'Vendor', 'Client') 
-                    AND legal_name IS NOT NULL AND first_name IS NULL AND last_name IS NULL
-                    )
-            `
-		)
+		index('idx_phones').on(t.phones)
 	]
 );
 

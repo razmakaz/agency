@@ -13,10 +13,22 @@ export const seed_privacy_policies = async () => {
 	const policies: PrivacyPolicies[] = [];
 	for await (const policy of payload) {
 		try {
-			const inserted = await db.insert(privacy_policies).values(policy).returning();
+			const inserted = await db
+				.insert(privacy_policies)
+				.values(policy)
+				.onConflictDoUpdate({
+					target: privacy_policies.id,
+					set: {
+						...policy
+					}
+				})
+				.returning();
 			policies.push(...inserted);
-		} catch (err) {
-			console.error('Error seeding privacy policies:', err);
+		} catch (error: unknown) {
+			console.error(
+				`Error seeding privacy policy ${policy.id}:`,
+				error instanceof Error ? error.message : String(error)
+			);
 		}
 	}
 

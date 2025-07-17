@@ -14,10 +14,22 @@ export const seed_terms_of_services = async () => {
 	const terms: TermsOfServices[] = [];
 	for await (const term of payload) {
 		try {
-			const inserted = await db.insert(terms_of_services).values(term).returning();
+			const inserted = await db
+				.insert(terms_of_services)
+				.values(term)
+				.onConflictDoUpdate({
+					target: terms_of_services.id,
+					set: {
+						...term
+					}
+				})
+				.returning();
 			terms.push(...inserted);
-		} catch (err) {
-			console.error('Error seeding terms of services:', err);
+		} catch (error: unknown) {
+			console.error(
+				`Error seeding terms of services ${term.id}:`,
+				error instanceof Error ? error.message : String(error)
+			);
 		}
 	}
 

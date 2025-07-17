@@ -141,7 +141,11 @@ export const get = async <T = unknown>(
 	endpoint: string,
 	options?: NoBodyOptions
 ): Promise<DataResponse<T>> => {
-	return makeRequest<T>('GET', endpoint, options as SharedOptions & { body?: BodyInit | null });
+	return makeRequest<T>(
+		'GET',
+		endpoint,
+		options || ({} as SharedOptions & { body?: BodyInit | null })
+	);
 };
 
 /**
@@ -283,4 +287,12 @@ export const parseQuery = (url: string): ParsedQuery => {
 			...Object.fromEntries(urlObj.searchParams)
 		}
 	};
+};
+
+export const Fetcher = {
+	get: get,
+	post: post,
+	put: put,
+	patch: patch,
+	delete: del
 };

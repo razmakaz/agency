@@ -12,13 +12,10 @@ export const white_label_configs = pgTable(WhiteLabelConfigsModelName, {
 	body_font: text('body_font'),
 
 	primary_color: text('primary_color'),
-	on_primary_color: text('on_primary_color'),
+	primary_content: text('primary_content'),
 
 	secondary_color: text('secondary_color'),
-	on_secondary_color: text('on_secondary_color'),
-
-	surface_color: text('surface_color'),
-	on_surface_color: text('on_surface_color'),
+	secondary_content: text('secondary_content'),
 
 	logo_url: text('logo_url'),
 	logo_dark_url: text('logo_dark_url'),

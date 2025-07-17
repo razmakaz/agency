@@ -1,8 +1,7 @@
 import { index, pgTable, text, type AnyPgColumn } from 'drizzle-orm/pg-core';
 import { defaultSchemaFields } from '../default.schema';
 import { addresses } from './addresses.schema';
-import { eq, sql } from 'drizzle-orm';
-import { db } from '..';
+import { users } from './auth.schema';
 
 export const OrganizationsModelName = 'organizations';
 
@@ -16,7 +15,9 @@ export const organizations = pgTable(
 		addresses: text('addresses')
 			.references(() => addresses.id)
 			.array(),
+		owner_id: text('owner_id').references(() => users.id),
 		parent_id: text('parent_id').references((): AnyPgColumn => organizations.id),
+
 		ancestry: text('ancestry').notNull().default('/')
 	},
 	(table) => [

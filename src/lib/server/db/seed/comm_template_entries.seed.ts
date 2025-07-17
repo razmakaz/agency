@@ -26,10 +26,22 @@ export const seed_comm_template_entries = async () => {
 	const entries: CommTemplateEntries[] = [];
 	for await (const entry of payload) {
 		try {
-			const inserted = await db.insert(comm_template_entries).values(entry).returning();
+			const inserted = await db
+				.insert(comm_template_entries)
+				.values(entry)
+				.onConflictDoUpdate({
+					target: comm_template_entries.id,
+					set: {
+						...entry
+					}
+				})
+				.returning();
 			entries.push(...inserted);
-		} catch (err) {
-			console.error('Error seeding comm template entries:', err);
+		} catch (error: unknown) {
+			console.error(
+				`Error seeding comm template entry ${entry.id}:`,
+				error instanceof Error ? error.message : String(error)
+			);
 		}
 	}
 

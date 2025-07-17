@@ -6,8 +6,11 @@
 	import ToastContainer from '$lib/client/components/Toaster/ToastContainer.svelte';
 	import Navbar from '$lib/client/components/Nav/Navbar.svelte';
 	import MobileNavbar from '$lib/client/components/Nav/MobileNavbar.svelte';
+	import { onMount } from 'svelte';
 
-	let { children } = $props();
+	let { children, data } = $props();
+
+	console.log('Theme CSS', data);
 
 	let state = $state({
 		ready: false
@@ -32,6 +35,12 @@
 		} else {
 			state.ready = true;
 		}
+	});
+
+	onMount(() => {
+		const style = document.createElement('style');
+		style.textContent = data.themeCss;
+		document.head.appendChild(style);
 	});
 </script>
 

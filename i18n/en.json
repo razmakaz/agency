@@ -3,6 +3,15 @@
 	"hello_world": "Hello, {name} from en!",
 
 	"common_clear": "Clear",
+	"common_back": "Back",
+	"common_skip": "Skip",
+	"common_next": "Next",
+	"common_finish": "Finish",
+
+	"onboarding_welcome_title": "Hey",
+	"onboarding_welcome_description": "We have questions and you have answers. <br />Let's get started!",
+	"onboarding_welcome_accept_description": "I accept the <a href='/terms' class='link link-primary'>Terms of Service</a> and <a href='/privacy' class='link link-primary'>Privacy Policy</a>",
+	"onboarding_welcome_opt_in": "I want to receive your newsletter, offers, and promotions.",
 
 	"auth_login_title": "Login",
 	"auth_login_email": "Email",

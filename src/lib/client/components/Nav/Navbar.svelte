@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Icon from '@iconify/svelte';
+	import { AppState } from '$lib/client/stores/AppState';
 
 	const categories = [
 		{
@@ -110,6 +111,11 @@
 					id: 'contracts',
 					label: 'Contracts',
 					href: '/resources/contracts'
+				},
+				{
+					id: 'calculator',
+					label: 'Calculator',
+					href: '/resources/calculator'
 				}
 			]
 		},
@@ -175,7 +181,11 @@
 	];
 </script>
 
-<div class="bg-primary/10 hidden h-screen min-w-64 overflow-y-auto lg:block">
+<div
+	class="bg-primary/10 hidden h-screen min-w-64 overflow-y-auto lg:block {!$AppState.navEnabled
+		? '!hidden'
+		: ''}"
+>
 	<div class="grid h-full grid-rows-[auto_auto_1fr]">
 		<div class="bg-primary text-primary-content p-4">Header</div>
 		<div class="from-primary/50 to-primary/0 h-4 bg-gradient-to-b"></div>
@@ -187,7 +197,7 @@
 					<!-- <div class="bg-base-content/20 ml-auto h-px w-full"></div> -->
 				</div>
 				{#each category.items as item}
-					<div class="grid grid-cols-[auto_1fr] items-center gap-2">
+					<div class="grid grid-cols-[auto_1fr] items-center gap-2 text-sm">
 						<div class="bg-base-content/20 h-full w-px" style="margin-left: 11px"></div>
 						<button
 							onclick={() => goto(item.href)}

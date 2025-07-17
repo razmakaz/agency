@@ -2,6 +2,7 @@
 	import Icon from '@iconify/svelte';
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
+	import { AppState } from '$lib/client/stores/AppState';
 
 	let state = $state({
 		active: 'Home'
@@ -53,7 +54,7 @@
 	{/each}
 </div>
 
-<div class="block lg:hidden">
+<div class="block lg:hidden {!$AppState.navEnabled ? '!hidden' : ''}">
 	<div class="bg-neutral">
 		<div class="relative flex items-center justify-center">
 			{#each menuItems as item, index}
